@@ -17,6 +17,10 @@ export class UserService {
     return await this.userRepository.getUser(user);
   }
 
+  async getMe(user) {
+    return await this.userRepository.getMe(user);
+  }
+
   async deleteUser(user) {
     let getOne = await this.userRepository.getUser(user);
     if (!getOne[0]) {

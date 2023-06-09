@@ -15,7 +15,7 @@ import path = require('path');
 import { v4 as uuidv4 } from 'uuid';
 import { UserService } from './user.service';
 import { AdminGuard, AuthGuard } from 'src/auth/guard/auth.guard';
-import { UpdateUserDto, UserIdDto } from './dto/user.dto';
+import { CurrentUserDto, UpdateUserDto, UserIdDto } from './dto/user.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CurrentUser } from 'src/auth/userInfo/getUserDecorator';
@@ -51,6 +51,12 @@ export class UserController {
   @UseGuards(AdminGuard)
   async getUser(@Param() user: UserIdDto) {
     return await this.userService.getUser(user);
+  }
+
+  @Get('/me')
+  @UseGuards(AdminGuard)
+  async getMe(@CurrentUser() user: CurrentUserDto) {
+    return await this.userService.getMe(user);
   }
 
   @Put('/update/:id')

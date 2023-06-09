@@ -19,6 +19,13 @@ export class UserRepository {
     return oneUser;
   }
 
+  getMe(user) {
+    const { id } = user;
+    const knex = this.knexConfig.instance;
+    const oneUser = knex.select('*').from('users').where({ id });
+    return oneUser;
+  }
+
   deleteUser(user) {
     const { id } = user;
     const knex = this.knexConfig.instance;
